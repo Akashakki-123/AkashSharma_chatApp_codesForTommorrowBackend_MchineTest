@@ -1,0 +1,87 @@
+export const apiRunningMessage = "API is running";
+export const healthCheckPassedMessage = "OK";
+export const healthCheckFailedMessage = "Health check failed";
+export const invalidUriMessage = "Invalid URI";
+export const somethingWentWrongMessage = "Something went wrong";
+export const internalServerErrorMessage = "Internal server error";
+export const validationErrorMessage = "Validation error";
+export const validationFailedMessage = "Validation failed";
+export const notFoundMessage = "Not found";
+export const duplicateEntryMessage = "Already exists";
+export const invalidReferenceMessage = "Invalid reference";
+
+export const successMessage = "Success";
+export const createdMessage = "Created";
+export const badRequestMessage = "Bad request";
+export const unauthorizedMessage = "Unauthorized";
+export const forbiddenMessage = "Forbidden";
+export const invalidRequestMessage = "Invalid request";
+export const errorMessage = "Error";
+export const serviceUnavailableMessage = "Service unavailable";
+
+export const rateLimitExceededMessage = "Too many requests, try again later";
+export const authRateLimitExceededMessage = "Too many login/signup attempts, try again later";
+
+export const signupSuccessMessage = "User created";
+export const loginSuccessMessage = "Login success";
+export const logoutSuccessMessage = "Logout success";
+export const emailPasswordRequiredMessage = "Email and password are required";
+export const signupRequiredFieldsMessage = "fullName, email, phone and password are required";
+export const invalidEmailFormatMessage = "Invalid email address";
+export const passwordMinLengthMessage = "Password must be at least 6 characters";
+export const invalidCredentialsMessage = "Invalid email or password";
+export const emailAlreadyRegisteredMessage = "Email already registered";
+export const tokenMissingMessage = "No token provided";
+export const invalidTokenFormatMessage = "Expected Bearer token";
+export const invalidTokenMessage = "Invalid or expired token";
+export const tokenExpiredMessage = "Token expired";
+export const authenticationFailedMessage = "Authentication failed";
+
+export const usersListSuccessMessage = "Users list";
+export const userDetailsSuccessMessage = "User details";
+export const userUpdateSuccessMessage = "User info updated";
+export const userDeleteSuccessMessage = "User deleted";
+export const userNotFoundMessage = "User not found";
+export const invalidUserIdMessage = "Invalid user ID";
+export const userIdRequiredMessage = "userId is required";
+export const noUpdateFieldsMessage = "Nothing to update";
+export const userAccessDeniedMessage = "Not allowed to access this user";
+
+export const chatCreateSuccessMessage = "Chat fetched";
+export const chatCreatedNewMessage = "Chat created";
+export const groupChatCreatedMessage = "Group chat created";
+export const userChatsSuccessMessage = "User chats";
+export const chatMembersAddedMessage = "Members added";
+export const chatMemberRemovedMessage = "Member removed";
+export const chatUsersRequiredMessage = "userAId and userBId are required";
+export const sameChatUsersErrorMessage = "userAId and userBId cannot be the same";
+export const chatParticipantsNotFoundMessage = "User(s) not found";
+export const chatIdRequiredMessage = "chatId is required";
+export const invalidChatIdMessage = "Invalid chatId";
+export const chatNotFoundMessage = "Chat not found";
+export const chatMembershipDeniedMessage = "You are not a member of this chat";
+export const notGroupChatMessage = "Only group chats support this action";
+export const groupNameRequiredMessage = "Group name is required";
+export const groupMembersRequiredMessage = "At least 2 members are required";
+export const memberIdsRequiredMessage = "memberIds cannot be empty";
+export const memberIdRequiredMessage = "memberId is required";
+export const chatMemberNotFoundMessage = "Member not found in this chat";
+export const groupRemovePermissionMessage = "Only group creator can remove others";
+
+export const messageSentSuccessMessage = "Message sent";
+export const messagesRetrievedMessage = "Messages fetched";
+export const messageReadSuccessMessage = "Marked as read";
+export const lastSeenUpdatedMessage = "Last seen updated";
+export const messageUpdatedSuccessMessage = "Message updated";
+export const messageDeletedSuccessMessage = "Message deleted";
+
+export const messageIdRequiredMessage = "messageId is required";
+export const lastSeenFieldsRequiredMessage = "userId and messageId are required";
+export const messageSendFieldsRequiredMessage = "senderId and text are required";
+export const messageTextRequiredMessage = "Message text is required";
+export const messageNotFoundMessage = "Message not found";
+export const messageDeletedAlreadyMessage = "Message already deleted";
+export const messageOwnerOnlyMessage = "Only sender can edit or delete this message";
+export const senderMismatchMessage = "senderId does not match logged in user";
+export const userIdMismatchMessage = "userId does not match logged in user";
+export const firebaseNotConfiguredMessage = "Firebase is not configured, check FIREBASE_* env vars";

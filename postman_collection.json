@@ -1,0 +1,605 @@
+{
+  "info": {
+    "_postman_id": "a7b4f9c2-6e1d-4c8a-9b3f-1e5d8c4a2b10",
+    "name": "Chat Backend API (PostgreSQL + Prisma + Firebase Firestore)",
+    "description": "Complete Postman Collection v2.1 for the Chat Backend with PostgreSQL/Prisma (Users & Chats), Firebase Firestore (Messages, Read Receipts & Last Seen), JWT Auth, Rate Limiting, and Bonus Group/Message Management APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "tokenB", "value": "", "type": "string" },
+    { "key": "userAId", "value": "", "type": "string" },
+    { "key": "userBId", "value": "", "type": "string" },
+    { "key": "chatId", "value": "", "type": "string" },
+    { "key": "groupChatId", "value": "", "type": "string" },
+    { "key": "messageId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Public_APIs",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup User A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const token = res.items?.token || res.data?.token;",
+                  "const userId = res.items?.user?.id || res.data?.user?.id;",
+                  "if (token) {",
+                  "  pm.environment.set(\"token\", token);",
+                  "  pm.collectionVariables.set(\"token\", token);",
+                  "}",
+                  "if (userId) {",
+                  "  pm.environment.set(\"userAId\", userId);",
+                  "  pm.collectionVariables.set(\"userAId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Alice Johnson\",\n  \"email\": \"alice.johnson@example.com\",\n  \"phone\": \"+919876543210\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Signup User B",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const token = res.items?.token || res.data?.token;",
+                  "const userId = res.items?.user?.id || res.data?.user?.id;",
+                  "if (token) {",
+                  "  pm.environment.set(\"tokenB\", token);",
+                  "  pm.collectionVariables.set(\"tokenB\", token);",
+                  "}",
+                  "if (userId) {",
+                  "  pm.environment.set(\"userBId\", userId);",
+                  "  pm.collectionVariables.set(\"userBId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Bob Smith\",\n  \"email\": \"bob.smith@example.com\",\n  \"phone\": \"+919876543211\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"token\", pm.response.json().items?.token || pm.response.json().data?.token);",
+                  "const res = pm.response.json();",
+                  "const token = res.items?.token || res.data?.token;",
+                  "const userId = res.items?.user?.id || res.data?.user?.id;",
+                  "if (token) pm.collectionVariables.set(\"token\", token);",
+                  "if (userId) {",
+                  "  pm.environment.set(\"userAId\", userId);",
+                  "  pm.collectionVariables.set(\"userAId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice.johnson@example.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User B",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const token = res.items?.token || res.data?.token;",
+                  "const userId = res.items?.user?.id || res.data?.user?.id;",
+                  "if (token) {",
+                  "  pm.environment.set(\"tokenB\", token);",
+                  "  pm.collectionVariables.set(\"tokenB\", token);",
+                  "}",
+                  "if (userId) {",
+                  "  pm.environment.set(\"userBId\", userId);",
+                  "  pm.collectionVariables.set(\"userBId\", userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob.smith@example.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "", "disabled": true }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userAId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userAId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Alice Johnson Updated\",\n  \"phone\": \"+919876543299\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userAId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userAId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User (Soft Delete)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userAId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userAId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chat_Core",
+      "item": [
+        {
+          "name": "1. Create or Get 1:1 Chat",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const chatId = res.items?.chatId || res.data?.chatId;",
+                  "if (chatId) {",
+                  "  pm.environment.set(\"chatId\", chatId);",
+                  "  pm.collectionVariables.set(\"chatId\", chatId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userAId\": \"{{userAId}}\",\n  \"userBId\": \"{{userBId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Send Message (User A)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const messageId = res.items?.id || res.data?.id;",
+                  "if (messageId) {",
+                  "  pm.environment.set(\"messageId\", messageId);",
+                  "  pm.collectionVariables.set(\"messageId\", messageId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"senderId\": \"{{userAId}}\",\n  \"text\": \"Hey Bob! Let's sync on the backend task.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/message/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "message", "send"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Messages (Ordered)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{tokenB}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/messages?limit=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "messages"],
+              "query": [
+                { "key": "limit", "value": "50" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Mark Message Read (User B)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{tokenB}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userBId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/message/{{messageId}}/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "message", "{{messageId}}", "read"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Update Last Seen Message (User B)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{tokenB}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userBId}}\",\n  \"messageId\": \"{{messageId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/lastseen",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "lastseen"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. List User Chats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/{{userAId}}/chats",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "{{userAId}}", "chats"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bonus_Group_And_Messages",
+      "item": [
+        {
+          "name": "Create Group Chat",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const groupChatId = res.items?.chatId || res.data?.chatId;",
+                  "if (groupChatId) {",
+                  "  pm.environment.set(\"groupChatId\", groupChatId);",
+                  "  pm.collectionVariables.set(\"groupChatId\", groupChatId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Backend Engineering Team\",\n  \"memberIds\": [\n    \"{{userBId}}\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/group",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "group"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Members to Group Chat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberIds\": [\n    \"{{userBId}}\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{groupChatId}}/members",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{groupChatId}}", "members"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Member from Group Chat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{groupChatId}}/members/{{userBId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{groupChatId}}", "members", "{{userBId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit Message (Sender Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Hey Bob! Let's sync on the backend task (edited).\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/message/{{messageId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "message", "{{messageId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Message (Soft Delete, Sender Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/chat/{{chatId}}/message/{{messageId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "{{chatId}}", "message", "{{messageId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
